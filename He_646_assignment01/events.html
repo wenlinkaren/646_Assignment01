@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice with jQuery Events</title>
+    <link href="styles/normalize.css" type="text/css" rel="stylesheet">
+    <link href="styles/styles.css" type="text/css" rel="stylesheet">
+    <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+	    $(function() {
+            //16
+            $('#myButton16').click(function () {
+                 window.alert("Button16 has been clicked!");
+            });
+            //17
+            $('#myButton17').bind('click', function () {
+                 window.alert("Button17 has been clicked!");
+            });
+            //18
+            $('#myButton18').on('click', function () {
+                 window.alert("Button18 has been clicked!");
+            });
+            //19
+            $('#myButton19').on({
+                click: function() {
+                    window.alert("Button19 has been clicked!");
+                }
+            }, 'button');
+            //20
+            $('#Q20').width(400).height(400).css('background-color', 'white');
+            $("#Q20").on({	
+                click: function() {		
+                    window.alert("You clicked on the div!");	
+                },
+                mouseenter: function() {		
+                    window.alert("The mouse entered the div!");	
+                },	
+                mouseleave: function() {		
+                    window.alert("The mouse left the div!");		
+                }
+            });
+            //21
+            $('#Q21').wrapInner('<span></span>').width(400).height(400).css('background-color', 'grey');
+            $('#Q21').on({	
+                click: function() {		
+                    $('span').html("You clicked on the div!");	
+                },
+                mouseenter: function() {		
+                    $('span').html("The mouse entered the div!");	
+                },	
+                mouseleave: function() {		
+                    $('span').html("The mouse left the div!");		
+                }
+            });
+            //22
+            $('a').click(function (e) {
+                e.preventDefault();
+                $('a').css('color', 'red');
+                window.alert(e.target.nodeName + ' triggered the event.');
+            });
+            //23
+            $(window).resize(function () {
+                let wid = $(window).width();
+                let hei = $(window).height();
+                $('#Q23').text("width: " + wid + " height: " + hei);   
+            });
+            //24
+            $('#Q24 input').focus(function () {
+                $('#Q24 input').css('background-color', '#d3d3d3');
+            });
+            $('#Q24 input').focusout(function () {
+                $('#Q24 input').css('background-color', 'white');
+            });
+            //25
+            $('#Q25').submit(function (e) {
+                let isValid = true;
+                let Name = $('#nam').val().trim();
+                if (Name == '') {
+                    window.alert("This field is required!");
+                    $('#nam').css('border-color', 'red');
+                    isValid = false;
+                } else {
+                    $('#nam').css('border-color', 'green');
+                }
+                $('#nam').val(Name);
+
+                let emailPattern = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}\b/;
+                let email = $('#email').val().trim();
+                if (email == '') {
+                    window.alert("This field is required!");
+                    $('#email').css('border-color', 'red');
+                    isValid = false;
+                } else if (!emailPattern.test(email)) {
+                    isValid = false;
+                } else {
+                    $('#email').css('border-color', 'green');
+                }
+                $('#email').val(email);
+
+                if (isValid == false) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <button id="myButton16">Click Me - 16</button>
+    <button id="myButton17">Click Me - 17</button>
+    <button id="myButton18">Click Me - 18</button>
+    <div id="myButton19">
+        <button id="myButton19A">Click Me - 19A</button>
+        <button id="myButton19B">Click Me - 19B</button>
+    </div>
+    <div id="Q20">
+        <p>This is div of question 20.</p>
+    </div>
+    <div id="Q21">
+        <p>This is div of question 21.</p>
+    </div>
+    <div id="Q22">
+        <a href="modulemedia.com">modulemedia.com</a>
+    </div>
+    <div id="Q23">
+    </div>
+    <div id="Q24">
+        <input type="text">
+    </div>
+    <form id="Q25" name="email_form" action="" method="get">
+        <label>Name: </label>
+        <input type="text" id="nam"><br>
+        <label>Email: </label>
+        <input type="email" id="email"><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
